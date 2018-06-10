@@ -43,6 +43,7 @@ class PackOutputStream{
         }else{
             data
         }
+
     }
     private fun show(data: ByteArray){
         var info=""
@@ -53,25 +54,30 @@ class PackOutputStream{
     }
     private fun checkHead():Boolean{
         var sp=2
-        var tmp=tmp!!
+        var tmp=this.tmp!!
+
+        show(tmp)
+        Log.i("passoa","tmp.size:"+tmp.size)
+
         if(tmp.size<9){
             return false
         }
-        show(tmp)
+
         while (sp<tmp.size){
             when (tmp[sp]) {
                 0.toByte() -> {
-                    if (tmp[sp-1]==0.toByte()){
-                        sp+=2
+                    sp += if (tmp[sp-1]==0.toByte()){
+                        2
                     }else {
-                        sp+=1
+                        1
                     }
                 }
                 1.toByte() -> {
                     if(tmp[sp-1]!=0.toByte() || tmp[sp-2]!=0.toByte()){
                         sp+=3
                     }else{
-                        this.tmp=tmp.sliceArray(IntRange(sp-2,tmp.size))
+                        this.tmp=tmp.sliceArray(IntRange(sp-2,tmp.size-1))
+                        Log.i("checkData","head.."+(sp-2)+""+this.tmp?.size)
                         return true
                     }
                 }
@@ -124,6 +130,7 @@ class PackOutputStream{
         if (tmp==null){
             return false
         }
+
         if (!checkHead()){
             Log.e("passoa","error1")
             return false

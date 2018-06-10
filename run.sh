@@ -1,4 +1,4 @@
-call gradlew.bat build
+./gradlew build
 cd app/build/outputs/apk/debug
 adb push ./app-debug.apk /data/local/tmp/org.passoa.poseidonandr
 adb shell pm install -t -r "/data/local/tmp/org.passoa.poseidonandr"

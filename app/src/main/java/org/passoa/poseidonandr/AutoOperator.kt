@@ -30,8 +30,10 @@ class AutoOperator {
         }
         MicroService.run()
         var s=mAccessibilityService?.rootInActiveWindow?.packageName.toString()
+        Log.i("updateEvent",mAccessibilityEvent?.source.toString())
+
         MicroService.push("{\"act\":\"notify\",\"id\":\"$s\"}")
-        Log.i("updateEvent","{\"act\":\"notify\",\"id\":\"$s\"}")
+        Log.i("updateEvent",event.toString())
     }
 
     fun findNodesByText(s: String): MutableList<AccessibilityNodeInfo>? {

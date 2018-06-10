@@ -17,12 +17,12 @@ object MicroService {
         pos.onData { data-> this.onMsg(data) }
     }
     private fun onData(bb: ByteBufferList){
-        Log.i("onData",""+bb.allByteArray.size)
+        //Log.i("onData",""+bb.allByteArray.size)
         pos.push(bb.allByteArray)
     }
     private fun onMsg(data:ByteArray){
         val str=data.toString(charset("utf-8"))
-        Log.i("passoa","onMsg"+str)
+        Log.i("passoa","onMsg"+str.length)
         val obj=JSONObject(str)
         when(obj.getString("act")){
             "click"->{AutoOperator.getInstance().clickByText(obj.getString("id"))}
@@ -48,7 +48,7 @@ object MicroService {
     }
 
     private fun asyncSocket(){
-        AsyncServer.getDefault().connectSocket("192.168.0.24",8009,{ex, socket -> onConnect(ex,socket) })
+        AsyncServer.getDefault().connectSocket("192.168.199.102",8009,{ex, socket -> onConnect(ex,socket) })
     }
     fun run(){
         if(!bInit) {
